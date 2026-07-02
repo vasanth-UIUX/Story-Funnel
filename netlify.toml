@@ -1,0 +1,15 @@
+# Netlify configuration for the diabetes-reversal landing page.
+# This is a static single-page site — no build step is required.
+# (Used only for Git-based deploys; drag-and-drop deploys ignore this file.)
+
+[build]
+  publish = "."
+
+# Long-cache the static asset. The HTML itself stays uncached so edits
+# go live immediately on the next deploy.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

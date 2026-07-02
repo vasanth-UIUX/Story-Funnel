@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>சர்க்கரை நோயிலிருந்து மீளுங்கள் — My Health School</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --purple:        #7C3AED;
+  --purple-mid:    #9B59F5;
+  --purple-light:  #EDE9FE;
+  --purple-pale:   #F5F3FF;
+  --pink:          #D946EF;
+  --grad:          linear-gradient(105deg, #7C3AED 0%, #D946EF 100%);
+  --grad-btn:      linear-gradient(105deg, #8B47F0 0%, #E055F5 100%);
+  --dark-bg:       #0F0B1A;
+  --dark-card:     #1A1430;
+  --dark-border:   rgba(124,58,237,0.3);
+  --white:         #FFFFFF;
+  --bg:            #FAFAF9;
+  --text-main:     #1A1A2E;
+  --text-body:     #3D3A52;
+  --text-muted:    #6E6B85;
+  --border:        #E4E1F0;
+  --success:       #22C55E;
+  --radius-sm:     8px;
+  --radius-md:     14px;
+  --radius-lg:     20px;
+  --radius-xl:     28px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 72px; /* space for sticky bar */
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  background: var(--grad);
+  color: #fff;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.topbar strong { color: #FFE97A; }
+
+/* ── NAV ── */
+nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 13px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 1px 12px rgba(124,58,237,0.07);
+}
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo-mark {
+  width: 38px; height: 38px;
+  background: var(--grad);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 15px; font-weight: 800; flex-shrink: 0;
+}
+.logo-text { font-size: 14px; font-weight: 700; color: var(--text-main); line-height: 1.2; }
+.logo-sub  { font-size: 11px; color: var(--text-muted); }
+.nav-cta {
+  background: var(--grad-btn);
+  color: white;
+  font-size: 13px; font-weight: 700;
+  padding: 9px 20px;
+  border-radius: var(--radius-xl);
+  text-decoration: none;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.nav-cta:hover { opacity: 0.9; }
+
+/* ── ABOVE-FOLD HEADER (replaces hero) ── */
+.above-fold-header {
+  text-align: center;
+  padding: 36px 0 22px;
+}
+.above-fold-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--purple-pale);
+  border: 1px solid #DDD6FE;
+  border-radius: 20px;
+  font-size: 12px; font-weight: 700;
+  color: var(--purple);
+  padding: 5px 14px; margin-bottom: 14px;
+  letter-spacing: 0.04em;
+}
+.above-fold-title {
+  font-size: clamp(28px, 5.5vw, 46px);
+  font-weight: 900; line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.above-fold-sub {
+  font-size: clamp(14px, 2.5vw, 17px);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--purple-mid); display: inline-block; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+/* ── VIDEO SECTION (first thing user sees) ── */
+.video-section {
+  background: var(--white);
+  padding: 0 24px 0;
+  max-width: 780px;
+  margin: 0 auto;
+}
+.section-eyebrow {
+  text-align: center;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--purple); margin-bottom: 10px;
+}
+.video-heading {
+  text-align: center;
+  font-size: clamp(20px, 3.5vw, 28px);
+  font-weight: 800; color: var(--text-main);
+  line-height: 1.2; margin-bottom: 6px;
+  max-width: 560px; margin-left: auto; margin-right: auto;
+}
+.video-sub {
+  text-align: center; font-size: 14px;
+  color: var(--text-muted); margin-bottom: 28px;
+}
+.video-wrapper {
+  position: relative; border-radius: var(--radius-lg);
+  overflow: hidden; background: #12082A;
+  box-shadow: 0 8px 40px rgba(124,58,237,0.22);
+  aspect-ratio: 16/9;
+}
+.video-wrapper iframe, .video-wrapper video {
+  width: 100%; height: 100%; border: none; display: block;
+}
+
+/* CTA immediately below video */
+.video-cta-wrap {
+  margin-top: 18px;
+  text-align: center;
+}
+.video-cta-btn {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: var(--grad-btn);
+  color: white;
+  font-size: clamp(16px, 2.5vw, 18px);
+  font-weight: 800;
+  padding: 17px 24px;
+  border-radius: var(--radius-xl);
+  text-decoration: none;
+  transition: opacity 0.15s, transform 0.12s;
+  box-shadow: 0 6px 28px rgba(124,58,237,0.38);
+  letter-spacing: 0.02em;
+}
+.video-cta-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+.video-cta-btn:active { transform: scale(0.99); }
+.video-cta-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+.video-cta-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 10px;
+  letter-spacing: 0.01em;
+}
+.video-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 14px;
+  color: rgba(255,255,255,0.55); font-size: 14px; cursor: pointer;
+  background: linear-gradient(135deg, #1A0A30 0%, #12082A 100%);
+}
+.play-btn {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--grad-btn);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 24px rgba(124,58,237,0.5);
+}
+.play-btn:hover { transform: scale(1.1); box-shadow: 0 6px 32px rgba(124,58,237,0.7); }
+.play-btn svg { width: 28px; height: 28px; fill: white; margin-left: 3px; }
+
+.patient-card {
+  background: var(--purple-pale);
+  border: 1px solid #DDD6FE;
+  border-radius: var(--radius-md);
+  padding: 16px 20px; margin-top: 16px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.patient-avatar {
+  width: 50px; height: 50px; border-radius: 50%;
+  background: var(--grad);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 18px; font-weight: 800; flex-shrink: 0;
+}
+.patient-name { font-weight: 700; font-size: 14px; color: var(--purple); }
+.patient-detail { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+.patient-result { margin-top: 8px; display: flex; gap: 7px; flex-wrap: wrap; }
+.result-pill {
+  background: var(--white); border: 1px solid #C4B5FD;
+  border-radius: 20px; font-size: 12px; font-weight: 700;
+  color: var(--purple); padding: 3px 11px;
+}
+
+.arrow-bridge {
+  text-align: center; padding: 30px 0 22px;
+  color: var(--text-muted); font-size: 14px; font-weight: 500;
+}
+.arrow-bridge .arrow-icon {
+  display: block; font-size: 24px; color: var(--purple);
+  margin-top: 7px; animation: bounce 1.6s ease-in-out infinite;
+}
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+/* ── FORM SECTION ── */
+.form-section {
+  background: var(--white);
+  max-width: 780px; margin: 0 auto;
+  padding: 0 24px 64px;
+}
+.form-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--purple);
+  border-radius: var(--radius-lg);
+  padding: 38px 34px;
+}
+@media (max-width: 540px) { .form-card { padding: 26px 18px; } }
+.form-title {
+  font-size: clamp(19px, 3vw, 25px);
+  font-weight: 800; color: var(--text-main);
+  line-height: 1.2; margin-bottom: 6px;
+}
+.form-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 540px) { .form-grid { grid-template-columns: 1fr; } }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field.full { grid-column: 1 / -1; }
+label { font-size: 13px; font-weight: 700; color: var(--text-body); }
+label .req { color: var(--purple); margin-left: 2px; }
+input, select, textarea {
+  font-family: inherit; font-size: 15px; color: var(--text-main);
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); padding: 12px 14px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none; width: 100%; -webkit-appearance: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.12);
+}
+select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236E6B85' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px;
+}
+textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+::placeholder { color: #B5B2C8; }
+.phone-wrap { position: relative; }
+.phone-flag { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 19px; pointer-events: none; }
+.phone-wrap input { padding-left: 44px; }
+
+.submit-btn {
+  width: 100%;
+  background: var(--grad-btn);
+  color: white; font-size: 17px; font-weight: 800;
+  padding: 16px 24px; border: none;
+  border-radius: var(--radius-xl);
+  cursor: pointer; letter-spacing: 0.01em;
+  transition: opacity 0.15s, transform 0.1s;
+  margin-top: 10px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  box-shadow: 0 4px 24px rgba(124,58,237,0.35);
+}
+.submit-btn:hover { opacity: 0.93; }
+.submit-btn:active { transform: scale(0.99); }
+.submit-btn svg { width: 20px; height: 20px; }
+
+.form-privacy {
+  font-size: 12px; color: var(--text-muted);
+  text-align: center; margin-top: 12px; line-height: 1.5;
+}
+.form-error {
+  display: none;
+  background: #FEE2E2; border: 1px solid #FCA5A5;
+  color: #991B1B; font-size: 13px; font-weight: 600;
+  text-align: center; padding: 11px 14px;
+  border-radius: var(--radius-sm); margin-top: 14px; line-height: 1.5;
+}
+.form-error a { color: #991B1B; text-decoration: underline; font-weight: 700; }
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ── STATS STRIP ── */
+.stats-strip {
+  background: var(--purple-pale);
+  border-top: 1px solid #DDD6FE;
+  border-bottom: 1px solid #DDD6FE;
+}
+.stats-inner {
+  max-width: 780px; margin: 0 auto;
+  padding: 30px 24px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px; text-align: center;
+}
+@media (max-width: 480px) { .stats-inner { grid-template-columns: 1fr 1fr; } }
+.stat-num {
+  font-size: clamp(28px, 5vw, 38px);
+  font-weight: 900; letter-spacing: -0.035em; line-height: 1;
+  background: var(--grad);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-label { font-size: 12px; color: var(--text-muted); margin-top: 5px; line-height: 1.4; }
+
+/* ── TESTIMONIALS ── */
+.proof-section {
+  max-width: 780px; margin: 0 auto;
+  padding: 56px 24px;
+}
+.proof-section h2 {
+  font-size: clamp(20px, 3.5vw, 28px);
+  font-weight: 800; color: var(--text-main);
+  margin-bottom: 6px; line-height: 1.2;
+}
+.section-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 30px; }
+.testimonials { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 540px) { .testimonials { grid-template-columns: 1fr; } }
+.testi-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 22px;
+  transition: box-shadow 0.15s;
+}
+.testi-card:hover { box-shadow: 0 4px 24px rgba(124,58,237,0.1); }
+.before-after {
+  display: flex; align-items: center; gap: 7px;
+  margin-bottom: 12px; font-size: 13px; font-weight: 700;
+}
+.ba-val {
+  border-radius: 6px; padding: 3px 9px;
+  background: #FEE2E2; color: #991B1B; font-size: 13px;
+}
+.ba-val.good { background: var(--purple-light); color: var(--purple); }
+.ba-arrow { color: var(--text-muted); }
+.testi-quote {
+  font-size: 14px; color: var(--text-body);
+  line-height: 1.6; font-style: italic; margin-bottom: 16px;
+}
+.testi-who { display: flex; align-items: center; gap: 10px; }
+.testi-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--grad);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 14px; font-weight: 800; flex-shrink: 0;
+}
+.testi-name { font-size: 13px; font-weight: 700; color: var(--text-main); }
+.testi-meta { font-size: 12px; color: var(--text-muted); }
+
+/* ── DOCTOR SECTION ── */
+.doctor-section {
+  background: var(--dark-bg);
+  color: white; padding: 56px 24px;
+  position: relative; overflow: hidden;
+}
+.doctor-section::before {
+  content: '';
+  position: absolute; bottom: -80px; right: -80px;
+  width: 360px; height: 360px;
+  background: radial-gradient(ellipse, rgba(124,58,237,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+.doctor-inner {
+  max-width: 780px; margin: 0 auto;
+  display: grid; grid-template-columns: auto 1fr;
+  gap: 30px; align-items: start; position: relative;
+}
+@media (max-width: 540px) { .doctor-inner { grid-template-columns: 1fr; } }
+.doctor-photo {
+  width: 104px; height: 104px; border-radius: 50%;
+  background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(217,70,239,0.3));
+  border: 3px solid rgba(124,58,237,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 38px; font-weight: 900; color: #C4B5FD; flex-shrink: 0;
+}
+.doctor-name {
+  font-size: clamp(18px, 3vw, 22px); font-weight: 800;
+  background: var(--grad);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 4px;
+}
+.doctor-title { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 14px; }
+.doctor-bio { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 16px; }
+.creds-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.cred-tag {
+  background: rgba(124,58,237,0.18);
+  border: 1px solid rgba(124,58,237,0.4);
+  border-radius: 20px; font-size: 12px; padding: 3px 11px;
+  color: #C4B5FD;
+}
+
+/* ── PROCESS ── */
+.process-section {
+  max-width: 780px; margin: 0 auto; padding: 56px 24px;
+}
+.process-section h2 {
+  font-size: clamp(20px, 3.5vw, 27px);
+  font-weight: 800; margin-bottom: 6px;
+}
+.process-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 34px; }
+.steps { display: flex; flex-direction: column; }
+.step {
+  display: grid; grid-template-columns: 48px 1fr;
+  gap: 18px; align-items: start;
+  padding: 0 0 30px; position: relative;
+}
+.step:not(:last-child)::before {
+  content: '';
+  position: absolute; left: 23px; top: 48px;
+  width: 2px; height: calc(100% - 18px);
+  background: linear-gradient(to bottom, #C4B5FD, transparent);
+}
+.step-num {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--purple-light); border: 2px solid #C4B5FD;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; font-weight: 800; color: var(--purple);
+  flex-shrink: 0; position: relative; z-index: 1;
+}
+.step-content-title {
+  font-size: 15px; font-weight: 800; color: var(--text-main);
+  margin-bottom: 4px; margin-top: 12px;
+}
+.step-content-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+/* ══════════════════════════════════════════
+   BOTTOM CTA — Reference style
+   Dark bg · Gradient button · Progress bar · Urgency strip
+   ══════════════════════════════════════════ */
+.bottom-cta {
+  background: var(--dark-bg);
+  padding: 60px 24px 56px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.bottom-cta::before {
+  content: '';
+  position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+  width: 700px; height: 400px;
+  background: radial-gradient(ellipse, rgba(124,58,237,0.28) 0%, transparent 70%);
+  pointer-events: none;
+}
+.bottom-cta-inner { max-width: 600px; margin: 0 auto; position: relative; }
+.cta-eyebrow {
+  display: inline-block;
+  background: rgba(124,58,237,0.22);
+  border: 1px solid rgba(124,58,237,0.45);
+  border-radius: 20px; font-size: 12px; font-weight: 700;
+  color: #C4B5FD; padding: 5px 14px; margin-bottom: 20px;
+  letter-spacing: 0.05em;
+}
+.bottom-cta h2 {
+  font-size: clamp(22px, 4.5vw, 34px);
+  font-weight: 900; color: var(--white);
+  line-height: 1.18; margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+.bottom-cta h2 span {
+  background: var(--grad);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.bottom-cta-sub {
+  font-size: 15px; color: rgba(255,255,255,0.6);
+  margin-bottom: 32px; line-height: 1.55;
+}
+
+/* Assurance row */
+.assurance-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 24px; flex-wrap: wrap;
+  font-size: 13px; color: rgba(255,255,255,0.6);
+  margin-bottom: 28px;
+}
+.assurance-row span { display: flex; align-items: center; gap: 6px; }
+.assurance-check { color: var(--success); font-size: 15px; }
+
+/* Progress / urgency */
+.urgency-box {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-md);
+  padding: 16px 20px; margin-bottom: 24px;
+}
+.urgency-label {
+  font-size: 14px; font-weight: 700;
+  color: rgba(255,255,255,0.9); margin-bottom: 10px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.urgency-label .taken { color: #FFD580; }
+.urgency-label .left  { color: rgba(255,255,255,0.5); font-weight: 400; font-size: 13px; }
+.progress-track {
+  height: 8px; border-radius: 99px;
+  background: rgba(255,255,255,0.1); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; border-radius: 99px;
+  background: linear-gradient(90deg, #A78BFA 0%, #D946EF 100%);
+  width: 0%;
+  transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Gradient CTA button — matches reference */
+.grad-cta-btn {
+  display: block; width: 100%;
+  background: var(--grad-btn);
+  color: white; font-size: 18px; font-weight: 800;
+  padding: 18px 24px; border: none;
+  border-radius: var(--radius-xl);
+  cursor: pointer; letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: opacity 0.15s, transform 0.12s;
+  box-shadow: 0 6px 32px rgba(124,58,237,0.45);
+  margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.grad-cta-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+.grad-cta-btn:active { transform: scale(0.99); }
+
+.wa-cta-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: rgba(37,211,102,0.12);
+  border: 1px solid rgba(37,211,102,0.4);
+  color: #4ADE80;
+  font-size: 15px; font-weight: 700;
+  padding: 13px 24px; border-radius: var(--radius-xl);
+  text-decoration: none; width: 100%;
+  transition: background 0.15s;
+  margin-bottom: 16px;
+}
+.wa-cta-btn:hover { background: rgba(37,211,102,0.2); }
+
+.cta-note {
+  font-size: 12px; color: rgba(255,255,255,0.38);
+  line-height: 1.6;
+}
+
+/* ── STICKY BOTTOM BAR ── reference style ── */
+.sticky-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #14102A;
+  border-top: 1px solid rgba(124,58,237,0.35);
+  padding: 10px 20px;
+  z-index: 300;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.4);
+}
+.sticky-left {
+  display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0;
+}
+.live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #EF4444;
+  animation: pulse 1.2s infinite;
+  flex-shrink: 0;
+}
+.sticky-timer-label {
+  font-size: 12px; color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+}
+.timer-digits {
+  display: flex; align-items: center; gap: 4px;
+}
+.timer-block {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 15px; font-weight: 800;
+  color: white; min-width: 34px; text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-family: 'Courier New', monospace;
+}
+.timer-sep { color: rgba(255,255,255,0.4); font-size: 14px; font-weight: 700; }
+.sticky-right { margin-left: auto; flex-shrink: 0; }
+.sticky-seats {
+  font-size: 12px; color: rgba(255,255,255,0.45);
+  text-align: right; margin-bottom: 3px;
+}
+.sticky-btn {
+  background: var(--grad-btn);
+  color: white; font-size: 14px; font-weight: 800;
+  padding: 10px 22px; border: none;
+  border-radius: var(--radius-xl);
+  cursor: pointer; white-space: nowrap;
+  transition: opacity 0.15s;
+  text-decoration: none; display: inline-block;
+  box-shadow: 0 2px 16px rgba(124,58,237,0.4);
+}
+.sticky-btn:hover { opacity: 0.9; }
+
+@media (max-width: 480px) {
+  .sticky-timer-label { display: none; }
+  .sticky-seats { display: none; }
+  .sticky-btn { font-size: 13px; padding: 10px 16px; }
+}
+
+/* ── SUCCESS SCREEN ── */
+.success-screen { display: none; text-align: center; padding: 36px 16px 28px; }
+.success-icon {
+  width: 76px; height: 76px; border-radius: 50%;
+  background: var(--purple-light); border: 3px solid #C4B5FD;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; font-size: 34px;
+}
+.success-screen h3 {
+  font-size: 22px; font-weight: 800;
+  color: var(--purple); margin-bottom: 8px;
+}
+.success-msg {
+  font-size: 15px; color: var(--text-muted);
+  max-width: 380px; margin: 0 auto 28px; line-height: 1.6;
+}
+.success-msg strong { color: var(--text-main); }
+
+/* 3-step what-happens-next row */
+.success-steps {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; margin-bottom: 28px; flex-wrap: nowrap;
+}
+.success-step {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px;
+  max-width: 100px;
+}
+.success-step-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--grad);
+  color: white; font-size: 15px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.success-step-text {
+  font-size: 12px; color: var(--text-muted);
+  line-height: 1.4; text-align: center;
+}
+.success-step-line {
+  flex: 1; height: 2px; min-width: 24px; max-width: 40px;
+  background: linear-gradient(90deg, #C4B5FD, #E9D5FF);
+  margin-bottom: 20px; flex-shrink: 0;
+}
+
+/* divider with text */
+.success-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 18px;
+}
+.success-divider::before, .success-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+.success-divider span {
+  font-size: 12px; color: var(--text-muted);
+  white-space: nowrap; font-weight: 500;
+}
+
+.wa-confirm-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #25D366; color: white;
+  font-size: 15px; font-weight: 800;
+  padding: 14px 28px; border-radius: var(--radius-xl);
+  text-decoration: none; transition: opacity 0.15s;
+  width: 100%; justify-content: center;
+  box-shadow: 0 4px 18px rgba(37,211,102,0.3);
+}
+.wa-confirm-btn:hover { opacity: 0.9; }
+.wa-note {
+  font-size: 12px; color: var(--text-muted);
+  margin-top: 10px; line-height: 1.5;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: #09060F;
+  color: rgba(255,255,255,0.4);
+  text-align: center; padding: 28px 24px;
+  font-size: 12px; line-height: 1.8;
+}
+footer a { color: rgba(255,255,255,0.55); text-decoration: none; }
+footer a:hover { color: #C4B5FD; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dot, .live-dot, .arrow-icon { animation: none; }
+  .progress-fill { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  🩺 <strong>1000+ patients</strong> have reversed diabetes naturally — without starving. Chennai, Tamil Nadu.
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">MH</div>
+    <div>
+      <div class="logo-text">My Health School</div>
+      <div class="logo-sub">Dr. Prabhakar Raj</div>
+    </div>
+  </a>
+  <a href="#assessment" class="nav-cta">Free assessment →</a>
+</nav>
+
+<!-- ABOVE-FOLD: headline + video immediately visible on landing -->
+<section class="video-section">
+
+  <!-- Tight headline — 2 lines max, no padding waste -->
+  <div class="above-fold-header">
+    <div class="above-fold-eyebrow">
+      <span class="dot"></span>
+      உண்மையான நோயாளி · உண்மையான முடிவுகள்
+    </div>
+    <h1 class="above-fold-title">
+      சர்க்கரை நோயிலிருந்து <span class="grad-text">நீங்களும் மீள முடியுமா?</span>
+    </h1>
+    <p class="above-fold-sub">Watch what happened to Rajesh — 58 yrs, diabetic for 11 years.</p>
+  </div>
+
+  <!-- VIDEO — immediately below headline, no scrolling needed -->
+  <div class="video-wrapper">
+    <!--
+      REPLACE THIS BLOCK WITH YOUR VIDEO.
+      Option A (YouTube): <iframe src="https://www.youtube.com/embed/YOUR_ID?rel=0" allowfullscreen></iframe>
+      Option B (MP4):     <video controls poster="thumb.jpg"><source src="video.mp4" type="video/mp4"></video>
+    -->
+    <div class="video-placeholder">
+      <div class="play-btn">
+        <svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9z"/></svg>
+      </div>
+      <span>Paste your patient testimony video here<br><small style="opacity:0.5">See HTML comments for instructions</small></span>
+    </div>
+  </div>
+
+  <!-- CTA immediately below video — for users who don't scroll -->
+  <div class="video-cta-wrap">
+    <a href="#assessment" class="video-cta-btn">
+      இலவச Assessment பெறுங்கள் →
+    </a>
+    <p class="video-cta-note">✓ Free &nbsp;·&nbsp; ✓ No obligation &nbsp;·&nbsp; ✓ Reply within 24 hrs</p>
+  </div>
+
+  <div class="patient-card">
+    <div class="patient-avatar">R</div>
+    <div>
+      <div class="patient-name">Rajesh Kumar, 58</div>
+      <div class="patient-detail">Retired teacher · Chennai · Diabetic for 11 years</div>
+      <div class="patient-result">
+        <span class="result-pill">HbA1c 9.4 → 5.8</span>
+        <span class="result-pill">Off 2 medications</span>
+        <span class="result-pill">In 90 days</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-bridge">
+    Could this be your story? Let's find out — takes 2 minutes.
+    <span class="arrow-icon">↓</span>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="assessment">
+  <div class="form-card">
+    <h2 class="form-title">Get Your Free Diabetes Reversal Assessment</h2>
+    <p class="form-sub">Our team will WhatsApp you within 24 hours with a personalised plan — no commitment needed.</p>
+
+    <form id="lead-form" onsubmit="handleSubmit(event)">
+      <div class="form-grid">
+        <div class="field">
+          <label for="name">Full name <span class="req">*</span></label>
+          <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="age">Your age <span class="req">*</span></label>
+          <input type="number" id="age" name="age" placeholder="e.g. 52" min="18" max="90" required>
+        </div>
+        <div class="field full">
+          <label for="phone">WhatsApp number <span class="req">*</span></label>
+          <div class="phone-wrap">
+            <span class="phone-flag">🇮🇳</span>
+            <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required autocomplete="tel">
+          </div>
+        </div>
+        <div class="field">
+          <label for="hba1c">Current HbA1c / fasting sugar</label>
+          <input type="text" id="hba1c" name="hba1c" placeholder="e.g. HbA1c 8.2 or 180 mg/dL">
+        </div>
+        <div class="field">
+          <label for="duration">Diabetes since how long?</label>
+          <select id="duration" name="duration">
+            <option value="">Select</option>
+            <option>Less than 1 year</option>
+            <option>1–3 years</option>
+            <option>3–5 years</option>
+            <option>5–10 years</option>
+            <option>More than 10 years</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button type="submit" class="submit-btn">
+        Get My Free Reversal Plan
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+      <div class="form-error" id="form-error">
+        ⚠️ Sorry, we couldn't save your details just now. Please try again — or
+        <a href="https://wa.me/91YOURNUMBER" target="_blank">WhatsApp us directly</a>.
+      </div>
+      <p class="form-privacy">🔒 Your number is private. We never spam. Only your assessment team will contact you.</p>
+    </form>
+
+    <div class="success-screen" id="success-screen">
+      <div class="success-icon">✓</div>
+      <h3>உங்கள் விவரங்கள் கிடைத்தன!</h3>
+      <p class="success-msg">Thank you! We have received your details. Our team will contact you within <strong>24 hours</strong>.</p>
+
+      <div class="success-steps">
+        <div class="success-step">
+          <div class="success-step-num">1</div>
+          <div class="success-step-text">Our team reviews your details</div>
+        </div>
+        <div class="success-step-line"></div>
+        <div class="success-step">
+          <div class="success-step-num">2</div>
+          <div class="success-step-text">We call you within 24 hours</div>
+        </div>
+        <div class="success-step-line"></div>
+        <div class="success-step">
+          <div class="success-step-num">3</div>
+          <div class="success-step-text">Free 15-min assessment call</div>
+        </div>
+      </div>
+
+      <div class="success-divider">
+        <span>Can't wait? Message us right now</span>
+      </div>
+
+      <a href="https://wa.me/91YOURNUMBER?text=Hi%2C%20I%20have%20submitted%20my%20details%20for%20the%20Diabetes%20Reversal%20Program.%20I%20would%20like%20to%20know%20more."
+         class="wa-confirm-btn" target="_blank">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.851L.054 23.28a.5.5 0 00.613.634l5.652-1.48A11.937 11.937 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.799 9.799 0 01-4.964-1.352l-.356-.212-3.686.966.985-3.595-.232-.37A9.796 9.796 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/>
+        </svg>
+        Chat with us on WhatsApp
+      </a>
+      <p class="wa-note">Tap to open WhatsApp — our team replies within minutes during 9am–6pm IST</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div><div class="stat-num">1000+</div><div class="stat-label">patients helped</div></div>
+    <div><div class="stat-num">9 yrs</div><div class="stat-label">clinical experience</div></div>
+    <div><div class="stat-num">90</div><div class="stat-label">days to results</div></div>
+    <div><div class="stat-num">87%</div><div class="stat-label">reduced medication</div></div>
+    <div><div class="stat-num">Zero</div><div class="stat-label">starvation diets</div></div>
+    <div><div class="stat-num">Free</div><div class="stat-label">first assessment</div></div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="proof-section">
+  <p class="section-eyebrow">What patients say</p>
+  <h2>Real results from real people</h2>
+  <p class="section-sub">These are not exceptions — this is our typical patient outcome.</p>
+  <div class="testimonials">
+    <div class="testi-card">
+      <div class="before-after"><span class="ba-val">HbA1c 9.4</span><span class="ba-arrow">→</span><span class="ba-val good">5.8</span></div>
+      <p class="testi-quote">"Doctors told me I'd be on insulin within a year. After 90 days with Dr. Prabhakar's program, I stopped two tablets and my HbA1c is now in normal range. I can't believe it."</p>
+      <div class="testi-who"><div class="testi-avatar">R</div><div><div class="testi-name">Rajesh Kumar</div><div class="testi-meta">58 yrs · Retired teacher · Chennai</div></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="before-after"><span class="ba-val">Fasting 218</span><span class="ba-arrow">→</span><span class="ba-val good">96</span></div>
+      <p class="testi-quote">"No extreme diet — they taught me how to eat differently. In 12 weeks my fasting is 96 and I have more energy than I had at 40."</p>
+      <div class="testi-who"><div class="testi-avatar">S</div><div><div class="testi-name">Sumathi Rajan</div><div class="testi-meta">52 yrs · Homemaker · Coimbatore</div></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="before-after"><span class="ba-val">HbA1c 8.8</span><span class="ba-arrow">→</span><span class="ba-val good">6.1</span></div>
+      <p class="testi-quote">"I was very skeptical — I had tried many things before. But the approach is completely different. They don't just give a diet chart, they change how you think."</p>
+      <div class="testi-who"><div class="testi-avatar">M</div><div><div class="testi-name">Murugesan P</div><div class="testi-meta">63 yrs · Business owner · Madurai</div></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="before-after"><span class="ba-val">HbA1c 10.2</span><span class="ba-arrow">→</span><span class="ba-val good">6.4</span></div>
+      <p class="testi-quote">"My nephrologist asked what I did. After the program I'm at 6.4 — she was genuinely surprised and asked me about Dr. Prabhakar's method."</p>
+      <div class="testi-who"><div class="testi-avatar">L</div><div><div class="testi-name">Lakshmi Narayanan</div><div class="testi-meta">55 yrs · IT professional · Bengaluru</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCTOR -->
+<section class="doctor-section">
+  <div class="doctor-inner">
+    <div class="doctor-photo">PR</div>
+    <div>
+      <div class="doctor-name">Dr. Prabhakar Raj</div>
+      <div class="doctor-title">Founder, My Health School · Diabetes Reversal Specialist · Chennai</div>
+      <p class="doctor-bio">For 9 years I've watched patients get told the same thing — "diabetes is for life, just manage it." I built My Health School to prove that wrong. Our 90-day protocol addresses the root cause: insulin resistance. Not with starvation, not with supplements, but with precision lifestyle changes. Over 1,000 patients later, the results speak for themselves.</p>
+      <div class="creds-row">
+        <span class="cred-tag">MBBS</span>
+        <span class="cred-tag">Lifestyle Medicine</span>
+        <span class="cred-tag">9 Years</span>
+        <span class="cred-tag">1000+ Patients</span>
+        <span class="cred-tag">Chennai-based</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="process-section">
+  <p class="section-eyebrow">After you apply</p>
+  <h2>Three steps to your results</h2>
+  <p class="process-sub">No commitment required until you decide it's right for you.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-content-title">Fill the form — 2 minutes</div>
+        <div class="step-content-desc">Share your current sugar levels and situation. Helps our team prepare for your call.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-content-title">Free 15-min assessment call</div>
+        <div class="step-content-desc">Our team calls you within 24 hours. We understand your case, answer every question, and honestly tell you if you're a candidate for reversal.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-content-title">Join your 90-day program</div>
+        <div class="step-content-desc">Personalised nutrition plan, weekly check-ins, and Dr. Prabhakar's direct guidance — nothing generic.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BOTTOM CTA — Reference style ══ -->
+<section class="bottom-cta">
+  <div class="bottom-cta-inner">
+    <span class="cta-eyebrow">⚡ LIMITED SPOTS THIS MONTH</span>
+    <h2>Your HbA1c number <span>can change.</span><br>Start with one free call.</h2>
+    <p class="bottom-cta-sub">No medication changes, no starvation. Just a 15-minute conversation with our team to find out if reversal is possible for you.</p>
+
+    <!-- Assurance row -->
+    <div class="assurance-row">
+      <span><span class="assurance-check">✓</span> Assessment is free</span>
+      <span><span class="assurance-check">✓</span> No obligation</span>
+      <span><span class="assurance-check">✓</span> Results in 90 days</span>
+    </div>
+
+    <!-- Progress / urgency -->
+    <div class="urgency-box">
+      <div class="urgency-label">
+        <span>🔥 <span class="taken" id="taken-count">31</span> assessments booked this week</span>
+        <span class="left" id="seats-left-text">19 spots left</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- Main gradient CTA -->
+    <a href="#assessment" class="grad-cta-btn">
+      Get My Free Assessment &nbsp;→
+    </a>
+
+    <!-- WhatsApp fallback -->
+    <a href="https://wa.me/91YOURNUMBER?text=Hi%2C%20I%20want%20to%20know%20about%20the%20Diabetes%20Reversal%20Program"
+       class="wa-cta-btn" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.851L.054 23.28a.5.5 0 00.613.634l5.652-1.48A11.937 11.937 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.799 9.799 0 01-4.964-1.352l-.356-.212-3.686.966.985-3.595-.232-.37A9.796 9.796 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+      Or WhatsApp us directly
+    </a>
+
+    <p class="cta-note">Free. No obligation. Monday–Saturday, 9am–6pm IST.<br>Over 1000 patients · 9 years · Trusted across Tamil Nadu.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 My Health School · Dr. Prabhakar Raj · Chennai, Tamil Nadu</p>
+  <p style="margin-top:6px">
+    <a href="#">Privacy policy</a> &nbsp;·&nbsp;
+    <a href="#">Terms</a> &nbsp;·&nbsp;
+    <a href="https://wa.me/91YOURNUMBER">WhatsApp: +91 YOUR NUMBER</a>
+  </p>
+  <p style="margin-top:10px; font-size:11px; opacity:0.45; max-width:600px; margin-left:auto; margin-right:auto;">Results may vary. This program is a lifestyle intervention and not a substitute for medical advice. Always consult your physician before changing medications.</p>
+</footer>
+
+<!-- ══ STICKY BOTTOM BAR ══ -->
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-left">
+    <span class="live-dot"></span>
+    <span class="sticky-timer-label">Offer closes in</span>
+    <div class="timer-digits">
+      <div class="timer-block" id="t-h">00</div>
+      <span class="timer-sep">:</span>
+      <div class="timer-block" id="t-m">00</div>
+      <span class="timer-sep">:</span>
+      <div class="timer-block" id="t-s">00</div>
+    </div>
+  </div>
+  <div class="sticky-right">
+    <div class="sticky-seats" id="sticky-seats">19 spots left</div>
+    <a href="#assessment" class="sticky-btn">Reserve My Free Spot →</a>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   CONFIG — paste your Google Apps Script Web App URL here.
+   (Deploy → New deployment → Web app → copy the /exec URL.)
+   ══════════════════════════════════════════════════════════ */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx62KFdHySvR4d-Tw7f1rBEXmxudDv65U85ulg6JqhfLf9NtHgYGB5cNdcb_xmC3odZ1A/exec';
+
+/* ── Form submit → save to Google Sheet, then show Thank You ── */
+async function handleSubmit(e) {
+  e.preventDefault();
+
+  const form    = document.getElementById('lead-form');
+  const btn     = form.querySelector('.submit-btn');
+  const errorEl = document.getElementById('form-error');
+
+  const data = {
+    name:      document.getElementById('name').value.trim(),
+    age:       document.getElementById('age').value.trim(),
+    phone:     document.getElementById('phone').value.trim(),
+    hba1c:     document.getElementById('hba1c').value.trim(),
+    duration:  document.getElementById('duration').value,
+    timestamp: new Date().toISOString()
+  };
+
+  // Enter "submitting" state
+  errorEl.style.display = 'none';
+  const originalBtnHTML = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = 'Submitting…';
+
+  try {
+    // NOTE: we deliberately do NOT set a 'Content-Type' header. That keeps
+    // this a "simple" CORS request so the browser skips the preflight that
+    // Google Apps Script can't answer. Apps Script still reads the JSON body.
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+
+    if (!res.ok) throw new Error('Server returned ' + res.status);
+
+    const result = await res.json();
+    if (result.result !== 'success') {
+      throw new Error(result.message || 'Submission was not saved.');
+    }
+
+    // ✅ Saved successfully — only now reveal the Thank You screen
+    form.style.display = 'none';
+    document.getElementById('success-screen').style.display = 'block';
+    document.getElementById('assessment').scrollIntoView({ behavior: 'smooth' });
+
+  } catch (err) {
+    // ❌ Something failed — keep the form, surface an error, let them retry
+    console.error('Lead submission failed:', err);
+    btn.disabled = false;
+    btn.innerHTML = originalBtnHTML;
+    errorEl.style.display = 'block';
+    errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+/* ── Progress bar animate on scroll ── */
+function animateProgress() {
+  const el = document.getElementById('progress-fill');
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  if (rect.top < window.innerHeight && !el.dataset.animated) {
+    el.dataset.animated = '1';
+    setTimeout(() => { el.style.width = '62%'; }, 200);
+  }
+}
+window.addEventListener('scroll', animateProgress, { passive: true });
+animateProgress();
+
+/* ── Countdown timer ── */
+function startTimer() {
+  // Set a target time: midnight tonight (creates genuine daily urgency)
+  const now = new Date();
+  const midnight = new Date(now);
+  midnight.setHours(23, 59, 59, 0);
+  let diff = Math.floor((midnight - now) / 1000);
+
+  function update() {
+    if (diff <= 0) { diff = 86399; } // reset next day
+    const h = Math.floor(diff / 3600);
+    const m = Math.floor((diff % 3600) / 60);
+    const s = diff % 60;
+    const pad = n => String(n).padStart(2, '0');
+    document.getElementById('t-h').textContent = pad(h);
+    document.getElementById('t-m').textContent = pad(m);
+    document.getElementById('t-s').textContent = pad(s);
+    diff--;
+  }
+  update();
+  setInterval(update, 1000);
+}
+startTimer();
+
+/* ── Smooth scroll ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
