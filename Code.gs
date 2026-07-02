@@ -18,6 +18,7 @@
 
 const SHEET_NAME = 'Leads';
 const HEADERS = ['Name', 'Age', 'Phone', 'HbA1c', 'Duration', 'Timestamp'];
+const PHONE_COL = 3; // 1-indexed column for Phone within HEADERS
 
 /** Handles the POST request sent by the landing-page form. */
 function doPost(e) {
@@ -27,8 +28,14 @@ function doPost(e) {
 
   try {
     const data = JSON.parse((e && e.postData && e.postData.contents) || '{}');
-
     const sheet = getSheet_();
+
+    // Phone numbers must be unique. If this one is already in the sheet,
+    // reject the submission instead of creating a duplicate lead row.
+    if (findRowByPhone_(sheet, normalizePhone_(data.phone))) {
+      return json_({ result: 'duplicate' });
+    }
+
     sheet.appendRow([
       data.name     || '',
       data.age      || '',
@@ -44,6 +51,27 @@ function doPost(e) {
   } finally {
     lock.releaseLock();
   }
+}
+
+/** Strips everything but digits, then keeps the last 10 — collapses +91 / 91 / 0 prefixes to the same key. */
+function normalizePhone_(phone) {
+  const digits = String(phone || '').replace(/\D/g, '');
+  return digits.slice(-10);
+}
+
+/** Returns the 1-indexed sheet row whose Phone matches, or null if no match / no phone. */
+function findRowByPhone_(sheet, normalizedPhone) {
+  if (!normalizedPhone) return null;
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return null; // header row only, or empty sheet
+
+  const phones = sheet.getRange(2, PHONE_COL, lastRow - 1, 1).getValues();
+  for (let i = 0; i < phones.length; i++) {
+    if (normalizePhone_(phones[i][0]) === normalizedPhone) {
+      return i + 2; // +2: 1-indexed sheet row, offset by the header row
+    }
+  }
+  return null;
 }
 
 /** Optional: opening the /exec URL in a browser confirms the app is live. */

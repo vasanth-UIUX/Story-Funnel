@@ -314,6 +314,14 @@ textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
   border-radius: var(--radius-sm); margin-top: 14px; line-height: 1.5;
 }
 .form-error a { color: #991B1B; text-decoration: underline; font-weight: 700; }
+.form-duplicate {
+  display: none;
+  background: var(--purple-pale); border: 1px solid #DDD6FE;
+  color: var(--purple); font-size: 13px; font-weight: 600;
+  text-align: center; padding: 11px 14px;
+  border-radius: var(--radius-sm); margin-top: 14px; line-height: 1.5;
+}
+.form-duplicate a { color: var(--purple); text-decoration: underline; font-weight: 700; }
 .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
 /* ── STATS STRIP ── */
@@ -845,6 +853,10 @@ footer a:hover { color: #C4B5FD; }
         ⚠️ Sorry, we couldn't save your details just now. Please try again — or
         <a href="https://wa.me/91YOURNUMBER" target="_blank">WhatsApp us directly</a>.
       </div>
+      <div class="form-duplicate" id="form-duplicate">
+        ℹ️ This number is already registered. Our team already has your details and will contact you within 24 hours — or
+        <a href="https://wa.me/91YOURNUMBER" target="_blank">WhatsApp us directly</a>.
+      </div>
       <p class="form-privacy">🔒 Your number is private. We never spam. Only your assessment team will contact you.</p>
     </form>
 
@@ -1053,15 +1065,16 @@ footer a:hover { color: #C4B5FD; }
    CONFIG — paste your Google Apps Script Web App URL here.
    (Deploy → New deployment → Web app → copy the /exec URL.)
    ══════════════════════════════════════════════════════════ */
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx62KFdHySvR4d-Tw7f1rBEXmxudDv65U85ulg6JqhfLf9NtHgYGB5cNdcb_xmC3odZ1A/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxoQUoSpglTadW-kErkEDOWo7oLbRPu7mJcTEKUxg5gSQ71ECq8tHqzo8XqOhq4LXX-hg/exec';
 
 /* ── Form submit → save to Google Sheet, then show Thank You ── */
 async function handleSubmit(e) {
   e.preventDefault();
 
-  const form    = document.getElementById('lead-form');
-  const btn     = form.querySelector('.submit-btn');
-  const errorEl = document.getElementById('form-error');
+  const form        = document.getElementById('lead-form');
+  const btn         = form.querySelector('.submit-btn');
+  const errorEl     = document.getElementById('form-error');
+  const duplicateEl = document.getElementById('form-duplicate');
 
   const data = {
     name:      document.getElementById('name').value.trim(),
@@ -1074,6 +1087,7 @@ async function handleSubmit(e) {
 
   // Enter "submitting" state
   errorEl.style.display = 'none';
+  duplicateEl.style.display = 'none';
   const originalBtnHTML = btn.innerHTML;
   btn.disabled = true;
   btn.innerHTML = 'Submitting…';
@@ -1090,6 +1104,16 @@ async function handleSubmit(e) {
     if (!res.ok) throw new Error('Server returned ' + res.status);
 
     const result = await res.json();
+
+    if (result.result === 'duplicate') {
+      // ℹ️ Already registered — block Thank You, tell them, let them retry with a different number
+      btn.disabled = false;
+      btn.innerHTML = originalBtnHTML;
+      duplicateEl.style.display = 'block';
+      duplicateEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
     if (result.result !== 'success') {
       throw new Error(result.message || 'Submission was not saved.');
     }
