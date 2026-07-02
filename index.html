@@ -159,6 +159,17 @@ nav {
   width: 100%; height: 100%; border: none; display: block;
   pointer-events: none; /* purely ambient — no click/hover access to controls */
 }
+.video-pause-btn {
+  position: absolute; right: 14px; bottom: 14px; z-index: 2;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--grad-btn); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(124,58,237,0.45);
+  transition: transform 0.15s, opacity 0.15s;
+}
+.video-pause-btn:hover { transform: scale(1.08); }
+.video-pause-btn:active { transform: scale(0.96); }
+.video-pause-btn svg { width: 18px; height: 18px; color: white; }
 
 /* CTA immediately below video */
 .video-cta-wrap {
@@ -763,8 +774,12 @@ footer a:hover { color: #C4B5FD; }
 
   <!-- VIDEO — immediately below headline, no scrolling needed -->
   <div class="video-wrapper">
-    <iframe src="https://player.vimeo.com/video/1206467753?title=0&byline=0&portrait=0&autoplay=1&muted=1&loop=1&background=1&controls=0"
+    <iframe id="testimony-video" src="https://player.vimeo.com/video/1206467753?title=0&byline=0&portrait=0&autoplay=1&muted=0&loop=1&controls=0"
             allow="autoplay; fullscreen; picture-in-picture" loading="lazy" tabindex="-1"></iframe>
+    <button type="button" class="video-pause-btn" id="video-pause-btn" aria-label="Pause video">
+      <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+      <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M8 5v14l11-7z"/></svg>
+    </button>
   </div>
 
   <!-- CTA immediately below video — for users who don't scroll -->
@@ -843,11 +858,11 @@ footer a:hover { color: #C4B5FD; }
       </button>
       <div class="form-error" id="form-error">
         ⚠️ Sorry, we couldn't save your details just now. Please try again — or
-        <a href="https://wa.me/91YOURNUMBER" target="_blank">WhatsApp us directly</a>.
+        <a href="https://wa.me/918925852022" target="_blank">WhatsApp us directly</a>.
       </div>
       <div class="form-duplicate" id="form-duplicate">
         ℹ️ This number is already registered. Our team already has your details and will contact you within 24 hours — or
-        <a href="https://wa.me/91YOURNUMBER" target="_blank">WhatsApp us directly</a>.
+        <a href="https://wa.me/918925852022" target="_blank">WhatsApp us directly</a>.
       </div>
       <p class="form-privacy">🔒 Your number is private. We never spam. Only your assessment team will contact you.</p>
     </form>
@@ -878,7 +893,7 @@ footer a:hover { color: #C4B5FD; }
         <span>Can't wait? Message us right now</span>
       </div>
 
-      <a href="https://wa.me/91YOURNUMBER?text=Hi%2C%20I%20have%20submitted%20my%20details%20for%20the%20Diabetes%20Reversal%20Program.%20I%20would%20like%20to%20know%20more."
+      <a href="https://wa.me/918925852022?text=Hi%2C%20I%20have%20submitted%20my%20details%20for%20the%20Diabetes%20Reversal%20Program.%20I%20would%20like%20to%20know%20more."
          class="wa-confirm-btn" target="_blank">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
@@ -1012,7 +1027,7 @@ footer a:hover { color: #C4B5FD; }
     </a>
 
     <!-- WhatsApp fallback -->
-    <a href="https://wa.me/91YOURNUMBER?text=Hi%2C%20I%20want%20to%20know%20about%20the%20Diabetes%20Reversal%20Program"
+    <a href="https://wa.me/918925852022?text=Hi%2C%20I%20want%20to%20know%20about%20the%20Diabetes%20Reversal%20Program"
        class="wa-cta-btn" target="_blank">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.851L.054 23.28a.5.5 0 00.613.634l5.652-1.48A11.937 11.937 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.799 9.799 0 01-4.964-1.352l-.356-.212-3.686.966.985-3.595-.232-.37A9.796 9.796 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
       Or WhatsApp us directly
@@ -1028,7 +1043,7 @@ footer a:hover { color: #C4B5FD; }
   <p style="margin-top:6px">
     <a href="#">Privacy policy</a> &nbsp;·&nbsp;
     <a href="#">Terms</a> &nbsp;·&nbsp;
-    <a href="https://wa.me/91YOURNUMBER">WhatsApp: +91 YOUR NUMBER</a>
+    <a href="https://wa.me/918925852022">WhatsApp: +91 89258 52022</a>
   </p>
   <p style="margin-top:10px; font-size:11px; opacity:0.45; max-width:600px; margin-left:auto; margin-right:auto;">Results may vary. This program is a lifestyle intervention and not a substitute for medical advice. Always consult your physician before changing medications.</p>
 </footer>
@@ -1052,6 +1067,7 @@ footer a:hover { color: #C4B5FD; }
   </div>
 </div>
 
+<script src="https://player.vimeo.com/api/player.js"></script>
 <script>
 /* ══════════════════════════════════════════════════════════
    CONFIG — paste your Google Apps Script Web App URL here.
@@ -1169,6 +1185,55 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
   });
 });
+
+/* ── Video controls: purple pause button + auto-pause when the tab is hidden ── */
+(function () {
+  const iframe = document.getElementById('testimony-video');
+  const btn = document.getElementById('video-pause-btn');
+  if (!iframe || !btn || !window.Vimeo) return;
+  const player = new Vimeo.Player(iframe);
+  const iconPause = btn.querySelector('.icon-pause');
+  const iconPlay  = btn.querySelector('.icon-play');
+  let userPaused = false; // true only when the visitor explicitly hit the pause button
+
+  function showPaused(isPaused) {
+    iconPause.style.display = isPaused ? 'none' : 'block';
+    iconPlay.style.display  = isPaused ? 'block' : 'none';
+    btn.setAttribute('aria-label', isPaused ? 'Play video' : 'Pause video');
+  }
+
+  player.setVolume(1).catch(() => {}); // make sure it starts unmuted
+  player.getPaused().then(showPaused).catch(() => {});
+  player.on('play', () => showPaused(false));
+  player.on('pause', () => showPaused(true));
+
+  btn.addEventListener('click', () => {
+    player.getPaused().then(paused => {
+      userPaused = !paused;
+      if (paused) player.play().catch(() => {});
+      else player.pause().catch(() => {});
+    });
+  });
+
+  // Pausing alone is enough to guarantee silence — no volume changes here,
+  // since toggling volume as a side effect risks leaving it stuck muted
+  // if a background/foreground event fires unexpectedly.
+  function pauseForBackground() {
+    player.pause().catch(() => {});
+  }
+  function resumeFromForeground() {
+    if (userPaused) return; // respect an explicit manual pause
+    player.play().catch(() => {});
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) pauseForBackground();
+    else resumeFromForeground();
+  });
+  // Second, independent signal — fires reliably on navigation/tab-close
+  // even in cases where visibilitychange is inconsistent (some mobile browsers).
+  window.addEventListener('pagehide', pauseForBackground);
+})();
 </script>
 </body>
 </html>
