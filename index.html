@@ -1207,6 +1207,21 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   player.on('play', () => showPaused(false));
   player.on('pause', () => showPaused(true));
 
+  // Browsers force-mute any autoplay that isn't triggered by a real user
+  // gesture — no JS call can override that. The one thing that works: the
+  // instant the visitor interacts with the page AT ALL (click/tap/scroll/key,
+  // not necessarily on the video), that gesture satisfies the browser's
+  // requirement, so we use it to unmute for real at that moment.
+  function unmuteOnFirstInteraction() {
+    player.setVolume(1).catch(() => {});
+    ['click', 'touchstart', 'keydown', 'scroll'].forEach(evt =>
+      window.removeEventListener(evt, unmuteOnFirstInteraction)
+    );
+  }
+  ['click', 'touchstart', 'keydown', 'scroll'].forEach(evt =>
+    window.addEventListener(evt, unmuteOnFirstInteraction, { passive: true })
+  );
+
   btn.addEventListener('click', () => {
     player.getPaused().then(paused => {
       userPaused = !paused;
