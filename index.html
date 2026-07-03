@@ -733,6 +733,56 @@ footer a:hover { color: #C4B5FD; }
   .dot, .live-dot, .arrow-icon { animation: none; }
   .progress-fill { transition: none; }
 }
+/* ── ASSESSMENT POPUP (appears at 1:20 of the video) ── */
+.assess-popup {
+  position: fixed; right: 20px; top: 50%;
+  transform: translate(120%, -50%);
+  width: 300px; max-width: calc(100vw - 40px);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--purple);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 48px rgba(124,58,237,0.28);
+  padding: 20px 20px 22px; z-index: 350; opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.5s;
+}
+.assess-popup.show { transform: translate(0, -50%); opacity: 1; }
+.assess-popup-close {
+  position: absolute; top: 8px; right: 10px;
+  background: none; border: none; cursor: pointer;
+  font-size: 22px; line-height: 1; color: var(--text-muted);
+  width: 28px; height: 28px; border-radius: 50%;
+  transition: background 0.15s, color 0.15s;
+}
+.assess-popup-close:hover { background: var(--purple-pale); color: var(--purple); }
+.assess-popup-emoji { font-size: 30px; margin-bottom: 6px; }
+.assess-popup-title {
+  font-size: 16px; font-weight: 800; color: var(--text-main);
+  line-height: 1.25; margin-bottom: 6px;
+}
+.assess-popup-text {
+  font-size: 13px; color: var(--text-body); line-height: 1.5; margin-bottom: 14px;
+}
+.assess-popup-text em { color: var(--purple); font-style: normal; font-weight: 700; }
+.assess-popup-btn {
+  display: block; text-align: center; text-decoration: none;
+  background: var(--grad-btn); color: #fff;
+  font-size: 14px; font-weight: 800;
+  padding: 12px 16px; border-radius: var(--radius-xl);
+  box-shadow: 0 4px 18px rgba(124,58,237,0.35);
+  transition: opacity 0.15s, transform 0.12s;
+}
+.assess-popup-btn:hover { opacity: 0.93; transform: translateY(-1px); }
+@media (max-width: 540px) {
+  .assess-popup {
+    top: auto; bottom: 84px; right: 12px; left: 12px;
+    width: auto; max-width: none; transform: translateY(140%);
+  }
+  .assess-popup.show { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .assess-popup { transition: opacity 0.3s; }
+}
 </style>
 </head>
 <body>
@@ -1064,6 +1114,15 @@ footer a:hover { color: #C4B5FD; }
   </div>
 </div>
 
+<!-- ASSESSMENT POPUP — appears at 1:20 of the video -->
+<div class="assess-popup" id="assess-popup" role="dialog" aria-label="Free assessment offer">
+  <button class="assess-popup-close" id="assess-popup-close" aria-label="Close">&times;</button>
+  <div class="assess-popup-emoji">🎉</div>
+  <div class="assess-popup-title">Inspired by what you're seeing?</div>
+  <div class="assess-popup-text">Reversal was possible for Rajesh — it may be possible for <em>you</em> too. Take the free 2-minute assessment.</div>
+  <a href="#assessment" class="assess-popup-btn" id="assess-popup-btn">Get My Free Assessment →</a>
+</div>
+
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script>
 /* ══════════════════════════════════════════════════════════
@@ -1199,27 +1258,37 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     btn.setAttribute('aria-label', isPaused ? 'Play video' : 'Pause video');
   }
 
-  player.setVolume(1).catch(() => {}); // make sure it starts unmuted
   player.getPaused().then(showPaused).catch(() => {});
   player.on('play', () => showPaused(false));
   player.on('pause', () => showPaused(true));
 
-  // Browsers force-mute any autoplay that isn't triggered by a real user
-  // gesture — no JS call can override that on load. The one thing that works:
-  // the instant the visitor interacts with the page AT ALL (click/tap/scroll/
-  // key, not necessarily on the video), that gesture satisfies the browser, so
-  // we unmute then. setMuted(false) is the key call — Vimeo auto-mutes to allow
-  // autoplay, and that muted flag is separate from volume, so setVolume alone
-  // would leave it silent.
-  function unmuteOnFirstInteraction() {
+  // Show the assessment nudge once the visitor has watched 1:20 (80s) of video.
+  let popupShown = false;
+  player.on('timeupdate', function (data) {
+    if (!popupShown && data && data.seconds >= 80) {
+      popupShown = true;
+      showAssessPopup();
+    }
+  });
+
+  // We request autoplay WITH sound (muted=0 on the iframe). Browsers that trust
+  // this site (the owner, repeat visitors) play it with sound on load. Browsers
+  // that block autoplay-with-sound fall back to muted playback — so as a safety
+  // net we unmute the instant the visitor interacts with the page in any way
+  // (click/tap/scroll/key), which is the gesture browsers require for audio.
+  let soundOn = false;
+  function enableSound() {
+    if (soundOn) return;
+    soundOn = true;
     player.setMuted(false).catch(() => {});
     player.setVolume(1).catch(() => {});
-    ['click', 'touchstart', 'keydown', 'scroll'].forEach(evt =>
-      window.removeEventListener(evt, unmuteOnFirstInteraction)
-    );
+    player.play().catch(() => {});
   }
   ['click', 'touchstart', 'keydown', 'scroll'].forEach(evt =>
-    window.addEventListener(evt, unmuteOnFirstInteraction, { passive: true })
+    window.addEventListener(evt, function onFirst() {
+      enableSound();
+      window.removeEventListener(evt, onFirst);
+    }, { passive: true })
   );
 
   btn.addEventListener('click', () => {
@@ -1249,6 +1318,64 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   // even in cases where visibilitychange is inconsistent (some mobile browsers).
   window.addEventListener('pagehide', pauseForBackground);
 })();
+
+/* ── Assessment popup + confetti (triggered at 1:20 of the video) ── */
+function showAssessPopup() {
+  const el = document.getElementById('assess-popup');
+  if (!el || el.classList.contains('show')) return;
+  el.classList.add('show');
+  burstConfetti();
+}
+(function () {
+  const closeBtn = document.getElementById('assess-popup-close');
+  const cta = document.getElementById('assess-popup-btn');
+  const hide = () => { const el = document.getElementById('assess-popup'); if (el) el.classList.remove('show'); };
+  if (closeBtn) closeBtn.addEventListener('click', hide);
+  if (cta) cta.addEventListener('click', hide); // CTA also scrolls to the form via the smooth-scroll handler
+})();
+
+function burstConfetti() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:500';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const W = window.innerWidth, H = window.innerHeight;
+  canvas.width = W * DPR; canvas.height = H * DPR; ctx.scale(DPR, DPR);
+  const colors = ['#7C3AED', '#9B59F5', '#D946EF', '#C4B5FD', '#FFE97A', '#22C55E'];
+  const ox = W - 160, oy = H * 0.5; // burst from near the right-side popup
+  const parts = [];
+  for (let i = 0; i < 90; i++) {
+    const a = Math.random() * Math.PI * 2;
+    const sp = 4 + Math.random() * 8;
+    parts.push({
+      x: ox, y: oy,
+      vx: Math.cos(a) * sp - 3, // bias leftward, into the screen
+      vy: Math.sin(a) * sp - 4, // bias upward
+      s: 5 + Math.random() * 6,
+      c: colors[(Math.random() * colors.length) | 0],
+      rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.35
+    });
+  }
+  let frame = 0;
+  (function anim() {
+    frame++;
+    ctx.clearRect(0, 0, W, H);
+    for (const p of parts) {
+      p.vy += 0.16; p.vx *= 0.99;
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      ctx.save();
+      ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.globalAlpha = Math.max(0, 1 - frame / 150);
+      ctx.fillStyle = p.c;
+      ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.6);
+      ctx.restore();
+    }
+    if (frame < 150) requestAnimationFrame(anim);
+    else canvas.remove();
+  })();
+}
 </script>
 </body>
 </html>
