@@ -432,6 +432,56 @@ textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
 .cf-dot.active { width: 22px; border-radius: 8px; background: var(--grad-btn); }
 @media (prefers-reduced-motion: reduce) { .cf-card { transition: opacity 0.3s; } }
 
+/* ── ANSAR SPOTLIGHT — image left, story right ── */
+.spotlight {
+  background:
+    radial-gradient(ellipse 55% 78% at 76% 46%, rgba(124,58,237,0.20) 0%, transparent 62%),
+    #0B0715;
+  padding: 60px 24px;
+  overflow: hidden;
+}
+.spotlight.flip {
+  background:
+    radial-gradient(ellipse 55% 78% at 24% 46%, rgba(124,58,237,0.20) 0%, transparent 62%),
+    #0B0715;
+}
+.spotlight-inner {
+  max-width: 1000px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 44px; align-items: center;
+}
+.spotlight-media { order: 2; }   /* default: image right, text left */
+.spotlight-text  { order: 1; }
+.spotlight.flip .spotlight-media { order: 1; }  /* flipped: image left, text right */
+.spotlight.flip .spotlight-text  { order: 2; }
+@media (max-width: 760px) {
+  .spotlight-inner { grid-template-columns: 1fr; gap: 22px; }
+  .spotlight-media, .spotlight-text,
+  .spotlight.flip .spotlight-media, .spotlight.flip .spotlight-text { order: 0; } /* stacked: photo on top */
+}
+.spotlight-photo {
+  width: 100%; height: auto; display: block;
+  /* Soft feathered edges → the photo melts into the dark background */
+  -webkit-mask-image: radial-gradient(ellipse 88% 90% at 52% 46%, #000 60%, transparent 100%);
+          mask-image: radial-gradient(ellipse 88% 90% at 52% 46%, #000 60%, transparent 100%);
+}
+.spotlight-title {
+  font-size: clamp(22px, 3.4vw, 30px);
+  font-weight: 800; color: #fff; line-height: 1.32; margin-bottom: 18px;
+}
+.spotlight-quote {
+  font-size: 15px; color: rgba(255,255,255,0.78);
+  line-height: 1.8; margin-bottom: 26px;
+  border-left: 3px solid var(--purple); padding-left: 16px;
+}
+.spotlight-tag {
+  font-size: 13px; font-weight: 700; color: #C4B5FD;
+  line-height: 1.55; letter-spacing: 0.01em; margin-bottom: 14px;
+}
+.spotlight-attr { margin-top: 2px; }
+.spotlight-name { font-size: 17px; font-weight: 800; color: #fff; line-height: 1.2; }
+.spotlight-meta { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 3px; }
+
 /* ── DOCTOR SECTION ── */
 .doctor-section {
   background: var(--dark-bg);
@@ -471,6 +521,44 @@ textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
   border: 1px solid rgba(124,58,237,0.4);
   border-radius: 20px; font-size: 12px; padding: 3px 11px;
   color: #C4B5FD;
+}
+
+/* ── SUMMIT SHOWCASE — My Health Summit 2026 recognition ── */
+.summit-showcase {
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 38%, rgba(124,58,237,0.18) 0%, transparent 65%),
+    #0B0715;
+  padding: 64px 24px 68px;
+}
+.summit-inner { max-width: 1080px; margin: 0 auto; text-align: center; }
+.summit-eyebrow {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #C4B5FD; margin-bottom: 22px;
+}
+.summit-frame {
+  position: relative; border-radius: 22px; overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06);
+  transition: transform 0.45s cubic-bezier(0.16,1,0.3,1), box-shadow 0.45s ease;
+}
+.summit-frame:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 34px 90px rgba(0,0,0,0.6), 0 0 0 1px rgba(196,181,253,0.28);
+}
+.summit-img { width: 100%; height: auto; display: block; }
+.summit-caption {
+  margin: 22px auto 0; max-width: 560px;
+  font-size: 13.5px; color: rgba(255,255,255,0.55); line-height: 1.65;
+}
+.summit-caption strong { color: rgba(255,255,255,0.85); font-weight: 700; }
+
+/* Reusable scroll-reveal: fades + rises into place once, first time it's visible */
+.reveal {
+  opacity: 0; transform: translateY(28px) scale(0.98);
+  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.show { opacity: 1; transform: translateY(0) scale(1); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { transition: opacity 0.4s ease; transform: none !important; opacity: 1; }
 }
 
 /* ── PROCESS ── */
@@ -656,6 +744,7 @@ textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
   font-family: 'Courier New', monospace;
 }
 .timer-sep { color: rgba(255,255,255,0.4); font-size: 14px; font-weight: 700; }
+.timer-days { display: flex; align-items: center; gap: 4px; }
 .sticky-right { margin-left: auto; flex-shrink: 0; }
 .sticky-seats {
   font-size: 12px; color: rgba(255,255,255,0.45);
@@ -929,7 +1018,7 @@ footer a:hover { color: #C4B5FD; }
 <!-- FORM -->
 <section class="form-section" id="assessment">
   <div class="form-card">
-    <h2 class="form-title">Get Your Free Diabetes Reversal Assessment</h2>
+    <h2 class="form-title">இனி மருந்தில்லாமல் வாழலாம் — முதல் அடி இங்கே தொடங்குகிறது</h2>
     <p class="form-sub">Our team will WhatsApp you within 24 hours with a personalised plan — no commitment needed.</p>
 
     <form id="lead-form" onsubmit="handleSubmit(event)">
@@ -1026,8 +1115,8 @@ footer a:hover { color: #C4B5FD; }
 <!-- STATS -->
 <div class="stats-strip">
   <div class="stats-inner">
-    <div><div class="stat-num">1000+</div><div class="stat-label">patients helped</div></div>
-    <div><div class="stat-num">9 yrs</div><div class="stat-label">clinical experience</div></div>
+    <div><div class="stat-num">10000+</div><div class="stat-label">patients helped</div></div>
+    <div><div class="stat-num">4 years</div><div class="stat-label">clinical experience</div></div>
     <div><div class="stat-num">90</div><div class="stat-label">days to results</div></div>
     <div><div class="stat-num">87%</div><div class="stat-label">reduced medication</div></div>
     <div><div class="stat-num">Zero</div><div class="stat-label">starvation diets</div></div>
@@ -1074,6 +1163,109 @@ footer a:hover { color: #C4B5FD; }
   <div class="cf-dots" id="cf-dots"></div>
 </section>
 
+<!-- TESTIMONIAL SPOTLIGHTS — alternating image/text layout -->
+<section class="spotlight">
+  <div class="spotlight-inner">
+    <div class="spotlight-media">
+      <img class="spotlight-photo" src="ansar-web-1.webp" alt="Ansar" loading="lazy">
+    </div>
+    <div class="spotlight-text">
+      <div class="spotlight-tag">HbA1c: 11 → 4.9 · 3 மாதங்களில்</div>
+      <h2 class="spotlight-title">இது என் வாழ்க்கையின் திருப்புமுனை</h2>
+      <p class="spotlight-quote">"நான் 9 வருடமாக மாத்திரை சாப்பிட்டேன். யாருக்கும் தெரியக்கூடாது என்று 30 கிலோமீட்டர் தூரம் போய் டாக்டரிடம் காட்டினேன். ஆனால் My Health School என் வாழ்க்கையையே மாற்றியது. HbA1c 11 இருந்தது — இப்போது 4.9. மருத்துவமனையிலிருந்து வெளியே வந்தபோது, சூரியன் மறையும் நேரத்தில் கைகளை தலைமேல் வைத்து வணங்கினேன். அந்த தருணம் என் வாழ்நாளில் மறக்க முடியாதது."</p>
+      <div class="spotlight-attr">
+        <div class="spotlight-name">Ansar</div>
+        <div class="spotlight-meta">35 yrs · Villupuram</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="spotlight flip">
+  <div class="spotlight-inner">
+    <div class="spotlight-media">
+      <img class="spotlight-photo" src="gayathiri-web-2.webp" alt="Gayathiri" loading="lazy">
+    </div>
+    <div class="spotlight-text">
+      <div class="spotlight-tag">மாத்திரை இல்லாமல் · 1 மாதத்தில் Reversed</div>
+      <h2 class="spotlight-title">மருந்தே இல்லாமல் ஒரே மாதத்தில் மாற்றம்</h2>
+      <p class="spotlight-quote">"சர்க்கரை நோய் இருக்கிறது என்று தெரிந்தபோது, மருத்துவர்கள் மாத்திரை எடு என்றார்கள். நான் மறுத்தேன். பலர் என்னை கேலி செய்தார்கள். ஆனால் My Health School-ல் சேர்ந்து உணவு மற்றும் வாழ்க்கை முறையை மட்டும் மாற்றினேன் — ஒரே ஒரு மாதத்தில் reverse ஆனது. இன்று வரை ஒரு மாத்திரை கூட சாப்பிடவில்லை. நம்பிக்கையோடு தொடர்ந்தால் நிச்சயம் வெற்றி கிடைக்கும்."</p>
+      <div class="spotlight-attr">
+        <div class="spotlight-name">Gayathiri</div>
+        <div class="spotlight-meta">35 · Chennai</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="spotlight">
+  <div class="spotlight-inner">
+    <div class="spotlight-media">
+      <img class="spotlight-photo" src="jayalakshmi-web-3.webp" alt="Jayalakshmi" loading="lazy">
+    </div>
+    <div class="spotlight-text">
+      <div class="spotlight-tag">2010 முதல் Diabetes · 21 நாட்களில் மாற்றம்</div>
+      <h2 class="spotlight-title">2010 முதல் மாத்திரை — 21 நாட்களில் எல்லாம் மாறியது</h2>
+      <p class="spotlight-quote">"2010 முதல் சர்க்கரை நோய். மாத்திரை சாப்பிட்டேன், பக்க விளைவுகள் வந்தன. Instagram-ல் Dr. Prabhakar-ஐ பார்த்தேன். 21 நாள் challenge எடுத்தேன் — சர்க்கரை, BP, கொலஸ்ட்ரால் மூன்றும் கட்டுக்குள் வந்தது. இப்போது மாத்திரையே இல்லை. இந்த வயதில் இப்படி ஒரு மாற்றம் வருமென்று நான் கனவிலும் நினைக்கவில்லை."</p>
+      <div class="spotlight-attr">
+        <div class="spotlight-name">Jayalakshmi</div>
+        <div class="spotlight-meta">50 yrs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="spotlight flip">
+  <div class="spotlight-inner">
+    <div class="spotlight-media">
+      <img class="spotlight-photo" src="kanchanadevi-web-4.webp" alt="Kanchana Devi" loading="lazy">
+    </div>
+    <div class="spotlight-text">
+      <div class="spotlight-tag">HbA1c 4.7 · எலும்பு வலியும் சரியானது</div>
+      <h2 class="spotlight-title">ஈரோட்டிலிருந்து 40 கிலோமீட்டர் தூரம் வந்தேன் — HbA1c 4.7 கிடைத்தது</h2>
+      <p class="spotlight-quote">"எனக்கு சர்க்கரை நோய், எலும்பு வலி என்று பல பிரச்சனைகள் இருந்தன. எங்கு சென்றாலும் மாத்திரைதான். My Health School-ல் சேர்ந்து அவர் சொன்னதை பின்பற்றினேன் — HbA1c 4.7 வந்தது. என்னை நானே நம்பவில்லை. இப்போது டாக்டரே கேட்கிறார், இவ்வளவு நல்லா எப்படி இருக்கீங்க என்று. சந்தேகப்படாதீர்கள் — நம்பிக்கையோடு சேருங்கள், மாற்றம் நிச்சயம் வரும்."</p>
+      <div class="spotlight-attr">
+        <div class="spotlight-name">Kanchana Devi</div>
+        <div class="spotlight-meta">ஈரோடு அருகே</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="spotlight">
+  <div class="spotlight-inner">
+    <div class="spotlight-media">
+      <img class="spotlight-photo" src="kannan-web-5.webp" alt="Kannan" loading="lazy">
+    </div>
+    <div class="spotlight-text">
+      <div class="spotlight-tag">படுக்கையிலிருந்து → காலை 4மணி யோகா · 2.5 மாதங்களில்</div>
+      <h2 class="spotlight-title">படுக்கையிலிருந்து எழுந்து — இப்போது 4 மணிக்கு யோகா செய்கிறேன்</h2>
+      <p class="spotlight-quote">"சாப்பிட முடியவில்லை, தூங்க முடியவில்லை, படுக்கையிலேயே கிடந்தேன். உடல் முழுவதும் சோர்வு — வாழ்க்கையே இப்படித்தானா என்று நினைத்தேன். My Health School-ல் சேர்ந்த பிறகு, இரண்டரை மாதத்தில் என் உடல் மாறியது. இப்போது காலை 4 மணிக்கு எழுந்து யோகா, நடை, உடற்பயிற்சி செய்கிறேன். 22 வயதில் bodybuilding செய்த ஆசை இருந்தது — 90 நாட்களில் 70kg weightlift செய்வேன். Dr. Prabhakar என் கனவை திரும்ப தந்தார்."</p>
+      <div class="spotlight-attr">
+        <div class="spotlight-name">Kannan</div>
+        <div class="spotlight-meta">37 yrs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="spotlight flip">
+  <div class="spotlight-inner">
+    <div class="spotlight-media">
+      <img class="spotlight-photo" src="karthikeyan-web-6.webp" alt="Karthikeyan" loading="lazy">
+    </div>
+    <div class="spotlight-text">
+      <div class="spotlight-tag">HbA1c 8.7 → 5.7 · அப்பா 13.1 → 5.8 · மன அழுத்தமும் சரியானது</div>
+      <h2 class="spotlight-title">"மரணம் வரை மாத்திரை சாப்பிட வேண்டும்" என்றார்கள் — இப்போது என் அப்பாவையும் மாற்றினேன்</h2>
+      <p class="spotlight-quote">"சர்க்கரை நோய் வந்தவுடன் குடும்பத்தினர் சொன்னார்கள் — இனி வாழ்க்கை முடிந்தது, மரணம் வரை மாத்திரை தான் என்று. நான் நம்பவில்லை. YouTube, Instagram எல்லாவற்றிலும் தேடினேன். My Health School கண்டேன். HbA1c 8.7 இருந்தது — இப்போது 5.7. என் அப்பாவுக்கு 13.1 இருந்தது — 6 மாதத்தில் 5.8 ஆனது. இப்போது என்னை கேலி செய்தவர்களே என்னிடம் கேட்கிறார்கள் — எப்படி சரியானீங்க என்று."</p>
+      <div class="spotlight-attr">
+        <div class="spotlight-name">Karthikeyan</div>
+        <div class="spotlight-meta">38 yrs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- DOCTOR -->
 <section class="doctor-section">
   <div class="doctor-inner">
@@ -1088,6 +1280,17 @@ footer a:hover { color: #C4B5FD; }
         <span class="cred-tag">1000+ Patients</span>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- SUMMIT SHOWCASE -->
+<section class="summit-showcase">
+  <div class="summit-inner">
+    <p class="summit-eyebrow">Our Community</p>
+    <div class="summit-frame reveal">
+      <img class="summit-img" src="summit-2026.jpg" alt="Patients honoured on stage at My Health Summit 2026 — Doctor Farmer Award" loading="lazy">
+    </div>
+    <p class="summit-caption">Patients from across Tamil Nadu, honoured on stage at <strong>My Health Summit 2026</strong> — the Doctor Farmer Award.</p>
   </div>
 </section>
 
@@ -1158,7 +1361,7 @@ footer a:hover { color: #C4B5FD; }
       Or WhatsApp us directly
     </a>
 
-    <p class="cta-note">Free. No obligation. Monday–Saturday, 9am–6pm IST.<br>Over 1000 patients · 9 years · Trusted across Tamil Nadu.</p>
+    <p class="cta-note">Free. No obligation.<br>Over 1000 patients · 4 years · Trusted across Tamil Nadu.</p>
   </div>
 </section>
 
@@ -1167,8 +1370,7 @@ footer a:hover { color: #C4B5FD; }
   <p>© 2026 My Health School · Dr. Prabhakar Raj · Chennai, Tamil Nadu</p>
   <p style="margin-top:6px">
     <a href="#">Privacy policy</a> &nbsp;·&nbsp;
-    <a href="#">Terms</a> &nbsp;·&nbsp;
-    <a href="https://wa.me/918925852022">WhatsApp: +91 89258 52022</a>
+    <a href="#">Terms</a>
   </p>
   <p style="margin-top:10px; font-size:11px; opacity:0.45; max-width:600px; margin-left:auto; margin-right:auto;">Results may vary. This program is a lifestyle intervention and not a substitute for medical advice. Always consult your physician before changing medications.</p>
 </footer>
@@ -1179,6 +1381,10 @@ footer a:hover { color: #C4B5FD; }
     <span class="live-dot"></span>
     <span class="sticky-timer-label">Offer closes in</span>
     <div class="timer-digits">
+      <span class="timer-days" id="t-d-wrap" style="display:none">
+        <div class="timer-block" id="t-d">00</div>
+        <span class="timer-sep">d</span>
+      </span>
       <div class="timer-block" id="t-h">00</div>
       <span class="timer-sep">:</span>
       <div class="timer-block" id="t-m">00</div>
@@ -1188,7 +1394,7 @@ footer a:hover { color: #C4B5FD; }
   </div>
   <div class="sticky-right">
     <div class="sticky-seats" id="sticky-seats">19 spots left</div>
-    <a href="#assessment" class="sticky-btn">Reserve My Free Spot →</a>
+    <a href="#assessment" class="sticky-btn">Free Assessment →</a>
   </div>
 </div>
 
@@ -1290,18 +1496,24 @@ animateProgress();
 
 /* ── Countdown timer ── */
 function startTimer() {
-  // Set a target time: midnight tonight (creates genuine daily urgency)
-  const now = new Date();
-  const midnight = new Date(now);
-  midnight.setHours(23, 59, 59, 0);
-  let diff = Math.floor((midnight - now) / 1000);
+  const FOUR_DAYS = 4 * 24 * 60 * 60; // 345600s — total span of the countdown
+  // Target: 4 days from the moment the page loads.
+  let diff = FOUR_DAYS;
 
+  const dWrap = document.getElementById('t-d-wrap');
   function update() {
-    if (diff <= 0) { diff = 86399; } // reset next day
-    const h = Math.floor(diff / 3600);
+    if (diff <= 0) { diff = FOUR_DAYS; } // reset for a fresh 4-day window
+    const d = Math.floor(diff / 86400);
+    const h = Math.floor((diff % 86400) / 3600); // hours WITHIN the day, so this never exceeds 23 once days are shown
     const m = Math.floor((diff % 3600) / 60);
     const s = diff % 60;
     const pad = n => String(n).padStart(2, '0');
+    if (d > 0) {
+      dWrap.style.display = '';
+      document.getElementById('t-d').textContent = d;
+    } else {
+      dWrap.style.display = 'none';
+    }
     document.getElementById('t-h').textContent = pad(h);
     document.getElementById('t-m').textContent = pad(m);
     document.getElementById('t-s').textContent = pad(s);
@@ -1481,12 +1693,13 @@ function openAssessmentForm() {
    embedded Vimeo player (autoplay + sound, since it starts from a real click).
    Plays WITHIN the card — no fullscreen, no redirect. ── */
 let playingCard = null;
-function playCardInline(card, vimeoId) {
+function playCardInline(card, vimeoId, muted) {
   stopCardInline();
   const wrap = document.createElement('div');
   wrap.className = 'cf-video';
   wrap.innerHTML = '<iframe src="https://player.vimeo.com/video/' + encodeURIComponent(vimeoId) +
-    '?autoplay=1&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture"></iframe>';
+    '?autoplay=1&title=0&byline=0&portrait=0' + (muted ? '&muted=1' : '') +
+    '" allow="autoplay; fullscreen; picture-in-picture"></iframe>';
   card.appendChild(wrap);
   card.classList.add('playing');
   playingCard = card;
@@ -1509,7 +1722,7 @@ function stopCardInline() {
   if (!cards.length) return;
 
   let active = Math.floor((cards.length - 1) / 2); // start roughly centred for the coverflow look
-  let autoTimer = null, autoDir = 1, autoStopped = false;
+  let inView = false;
 
   const dots = [];
   if (dotsWrap) {
@@ -1542,9 +1755,10 @@ function stopCardInline() {
   }
 
   function setActive(i) {
-    if (typeof stopCardInline === 'function') stopCardInline(); // stop a playing card when we move
+    stopCardInline();                         // pause the card we're leaving
     active = Math.max(0, Math.min(cards.length - 1, i));
     layout();
+    if (inView) playActive();                 // auto-play the newly centred card
   }
 
   // Click: a side card slides to the centre; the centre card plays its video
@@ -1556,7 +1770,7 @@ function stopCardInline() {
       stopAuto();
       if (i !== active) { setActive(i); return; }
       const vid = card.getAttribute('data-video');
-      if (vid) playCardInline(card, vid);
+      if (vid) playCardInline(card, vid, false);   // explicit click → play WITH sound
       else if (typeof openAssessmentForm === 'function') openAssessmentForm();
     });
   });
@@ -1579,19 +1793,32 @@ function stopCardInline() {
     if (e.key === 'ArrowRight') { stopAuto(); setActive(active + 1); e.preventDefault(); }
   });
 
-  // Gentle autoplay: ping-pongs across the cards, pauses on hover, stops for good on manual use.
-  function tick() {
-    if (active >= cards.length - 1) autoDir = -1;
-    else if (active <= 0) autoDir = 1;
-    setActive(active + autoDir);
+  // No carousel auto-advance any more — the centred card's video auto-plays instead.
+  function stopAuto() {} // kept as a harmless no-op so the handlers above stay simple
+
+  // Play the centred card's video (muted, so browsers allow autoplay); anything
+  // not centred is paused. Only ever one video plays at a time.
+  function playActive() {
+    const card = cards[active];
+    if (!card) return;
+    const vid = card.getAttribute('data-video');
+    if (vid) playCardInline(card, vid, true);
   }
-  function startAuto() { if (!autoStopped && !autoTimer) autoTimer = setInterval(tick, 5000); }
-  function stopAuto() { autoStopped = true; if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
-  cf.addEventListener('pointerenter', function () { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } });
-  cf.addEventListener('pointerleave', function () { if (!autoStopped) startAuto(); });
+
+  // Auto-play when the carousel scrolls into view; pause when it scrolls away.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        inView = e.isIntersecting;
+        if (inView) playActive();
+        else stopCardInline();
+      });
+    }, { threshold: 0.6 }).observe(cf);
+  } else {
+    inView = true;
+  }
 
   layout();
-  startAuto();
 })();
 
 /* ── Fetch the real Vimeo thumbnail for every card that has a data-video.
@@ -1613,6 +1840,58 @@ function stopCardInline() {
       })
       .catch(function () { /* keep the gradient placeholder if Vimeo is unreachable */ });
   });
+})();
+
+/* ── Stats count-up: numbers animate 0 → value when the strip scrolls into view ── */
+(function () {
+  const strip = document.querySelector('.stats-strip');
+  if (!strip) return;
+  // Parse each stat into prefix + number + suffix; non-numeric ones (Zero, Free) are skipped.
+  const items = Array.from(strip.querySelectorAll('.stat-num')).map(function (el) {
+    const m = el.textContent.trim().match(/^(\D*)(\d[\d,]*)(.*)$/);
+    if (!m) return null; // non-numeric (Zero, Free) → leave as-is
+    // Keep the real value until we animate, so if the observer never fires the
+    // numbers still read correctly (graceful fallback). run() starts from 0.
+    return { el: el, prefix: m[1], target: parseInt(m[2].replace(/,/g, ''), 10), suffix: m[3] };
+  });
+
+  function run() {
+    const duration = 1600, start = performance.now();
+    (function frame(now) {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3); // ease-out
+      items.forEach(function (it) {
+        if (it) it.el.textContent = it.prefix + Math.round(it.target * eased) + it.suffix;
+      });
+      if (t < 1) requestAnimationFrame(frame);
+    })(start);
+  }
+
+  let done = false;
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && !done) { done = true; run(); io.disconnect(); }
+      });
+    }, { threshold: 0.4 });
+    io.observe(strip);
+  } else {
+    run();
+  }
+})();
+
+/* ── Scroll-reveal: fades/rises any .reveal element into place the first time
+   it enters the viewport (used by the summit showcase). ── */
+(function () {
+  const els = document.querySelectorAll('.reveal');
+  if (!els.length) return;
+  if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('show'); }); return; }
+  const io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.2 });
+  els.forEach(function (el) { io.observe(el); });
 })();
 </script>
 </body>
