@@ -2,3 +2,12 @@
 node_modules/
 *.log
 .vercel
+
+# Source/working assets — images are inlined into index.html and the video lives
+# on Vimeo, so none of these need to ship in the repo.
+*.mp4
+ChatGPT Image*.png
+Untitled design.png
+Profile.png
+profile 2.png
+gt.png
